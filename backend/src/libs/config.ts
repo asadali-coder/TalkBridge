@@ -1,9 +1,10 @@
 import "dotenv/config";
 export const origins = (
-  process.env.CLIENT_URL ||
-  "http://localhost:5173 , http://localhost:5174 , https://talk-bridge-chat.vercel.app/")
+  process.env.CLIENT_URL || "http://localhost:5173,http://localhost:5174"
+)
   .split(",")
-  .map((s) => s.trim());
+  .map((s) => s.trim().replace(/\/+$/, ""))
+  .filter(Boolean);
 export const cookieOptions = {
   httpOnly: true,
   secure: process.env.NODE_ENV === "production",
