@@ -485,4 +485,4 @@ Moderation uses a configurable local list and an optional AI decision, so it can
 ## Author
 
 **Asad Ali** — Full Stack Developer  
-[Portfolio](https://asad-personal-portfolio.vercel.app/)
+[Portfolio](https://asadali-coder.vercel.app/)
