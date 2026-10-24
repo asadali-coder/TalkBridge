@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+@plugin "daisyui" {
+  themes: all;
+}
+
+
+.msg-highlight .chat-bubble {
+  animation: replyFlash 1.4s ease-out;
+}
+
+@keyframes replyFlash {
+  0% {
+    background-color: rgba(59, 130, 246, 0.25);
+  }
+
+  100% {
+    background-color: transparent;
+  }
+}

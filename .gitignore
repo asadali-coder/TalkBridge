@@ -1,0 +1,42 @@
+# Dependencies
+node_modules/
+
+# Environment files and secrets (keep examples tracked)
+.env
+.env.*
+!.env.example
+!.env.*.example
+
+# Build output and caches
+dist/
+build/
+coverage/
+.vite/
+.cache/
+.eslintcache
+*.tsbuildinfo
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Local deployment metadata
+.vercel/
+
+# Editor and operating system files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.swp
+*.swo
+*~
+
+# Temporary files
+*.tmp
+*.temp
