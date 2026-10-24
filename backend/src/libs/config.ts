@@ -1,9 +1,7 @@
 import "dotenv/config";
 export const origins = (
   process.env.CLIENT_URL ||
-  "http://localhost:5173,http://localhost:5174" ||
-  "https://talk-bridge-chat.vercel.app/"
-)
+  "http://localhost:5173 , http://localhost:5174 , https://talk-bridge-chat.vercel.app/")
   .split(",")
   .map((s) => s.trim());
 export const cookieOptions = {
