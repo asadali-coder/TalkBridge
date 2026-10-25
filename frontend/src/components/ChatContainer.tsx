@@ -143,11 +143,32 @@ const ChatContainer = ({
     readingEnabled,
   ]);
 
+  // Keep the bottom visible while the keyboard or composer changes height.
+  useEffect(() => {
+    const root = viewportRef.current;
+    if (!root) return;
+    const observer = new ResizeObserver(() => {
+      if (positioned.current && nearBottom.current)
+        root.scrollTop = root.scrollHeight;
+    });
+    observer.observe(root);
+    return () => observer.disconnect();
+  }, [isMessagesLoading]);
+
   const jumpToMessage = (id: string) => {
     const el = document.getElementById(`msg-${id}`);
     if (!el) return;
 
-    el.scrollIntoView({ behavior: "smooth", block: "center" });
+    const root = viewportRef.current;
+    if (!root) return;
+    root.scrollTo({
+      top:
+        root.scrollTop +
+        el.getBoundingClientRect().top -
+        root.getBoundingClientRect().top -
+        (root.clientHeight - el.offsetHeight) / 2,
+      behavior: "smooth",
+    });
     el.classList.add("msg-highlight");
     setTimeout(() => el.classList.remove("msg-highlight"), 1200);
   };
@@ -174,8 +195,7 @@ const ChatContainer = ({
           href={cleaned}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-blue-400 underline break-words"
-        >
+          className="text-blue-400 underline break-words">
           {cleaned}
         </a>
       );
@@ -207,16 +227,14 @@ const ChatContainer = ({
             nearBottom.current = bottom;
             setAtBottom(bottom);
           }}
-          className="h-full overflow-y-auto overscroll-contain p-4 space-y-4"
-        >
+          className="h-full overflow-y-auto overscroll-contain p-4 space-y-4">
           {messages?.map((message) => (
             <Fragment key={message._id}>
               {message._id === firstUnreadId && (
                 <div
                   id={`unread-${message._id}`}
                   data-testid="unread-divider"
-                  className="flex items-center gap-3 py-2 text-xs font-medium text-base-content/60"
-                >
+                  className="flex items-center gap-3 py-2 text-xs font-medium text-base-content/60">
                   <span className="h-px flex-1 bg-base-300" />
                   <span className="shrink-0 rounded-full border border-base-300 bg-base-100 px-3 py-1">
                     Unread messages
@@ -229,8 +247,7 @@ const ChatContainer = ({
                 data-message-id={message._id}
                 className={`chat ${
                   message.senderId === authUser._id ? "chat-end" : "chat-start"
-                }`}
-              >
+                }`}>
                 <div className="chat-image avatar">
                   <div className="size-10 rounded-full border">
                     <img
@@ -255,8 +272,7 @@ const ChatContainer = ({
                     message.senderId === authUser._id
                       ? "bg-primary text-primary-content"
                       : "bg-base-200 text-base-content"
-                  }`}
-                >
+                  }`}>
                   {message.isDeleted && (
                     <p className="italic opacity-60">Message deleted</p>
                   )}
@@ -264,8 +280,7 @@ const ChatContainer = ({
                   {message.replyTo && (
                     <div
                       onClick={() => jumpToMessage(message.replyTo._id)}
-                      className="mb-1 px-3 py-2 rounded-md bg-zinc-800/80 border-l-4 border-blue-500 cursor-pointer hover:bg-zinc-800 transition"
-                    >
+                      className="mb-1 px-3 py-2 rounded-md bg-zinc-800/80 border-l-4 border-blue-500 cursor-pointer hover:bg-zinc-800 transition">
                       <p className="text-xs text-blue-400 font-medium mb-0.5">
                         Replying to{" "}
                         {message.replyTo.senderId === authUser._id
@@ -325,8 +340,7 @@ const ChatContainer = ({
                     className="text-xs underline mt-2 mr-3 cursor-pointer disabled:opacity-40"
                     onClick={() =>
                       useChatStore.getState().setReplyingTo(message)
-                    }
-                  >
+                    }>
                     Reply
                   </button>
                   {message.senderId === authUser._id && !message.isDeleted && (
@@ -335,8 +349,7 @@ const ChatContainer = ({
                       onClick={() => {
                         if (window.confirm("Delete this message for everyone?"))
                           void deleteMessage(message._id);
-                      }}
-                    >
+                      }}>
                       Delete
                     </button>
                   )}
@@ -359,8 +372,7 @@ const ChatContainer = ({
               const root = viewportRef.current;
               if (root)
                 root.scrollTo({ top: root.scrollHeight, behavior: "smooth" });
-            }}
-          >
+            }}>
             ↓ {unreadCount > 0 ? unreadCount : "Latest"}
           </button>
         )}

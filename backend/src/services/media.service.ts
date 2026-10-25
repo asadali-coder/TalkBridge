@@ -23,7 +23,7 @@ export function parseMedia(value: unknown, kind: "image" | "audio") {
   return { mimeType: match[1], data };
 }
 export async function uploadMedia(value: string, kind: "image" | "audio") {
-  parseMedia(value, kind);
+  const { mimeType, data } = parseMedia(value, kind);
   if (
     !process.env.CLOUDINARY_API_KEY ||
     !process.env.CLOUDINARY_API_SECRET ||
@@ -33,7 +33,10 @@ export async function uploadMedia(value: string, kind: "image" | "audio") {
       503,
       "Media uploads are not configured. Add Cloudinary settings on the server.",
     );
-  const result = await cloudinary.uploader.upload(value, {
+  // Cloudinary expects a plain MIME data URI, without MediaRecorder codec parameters.
+  // Keep the original MIME type and audio bytes; this is not transcoding.
+  const source = `data:${mimeType};base64,${data}`;
+  const result = await cloudinary.uploader.upload(source, {
     resource_type: kind === "audio" ? "video" : "image",
     folder: "chat",
   });

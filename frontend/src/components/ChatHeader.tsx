@@ -12,7 +12,7 @@ const ChatHeader = () => {
   const banned = isUserBanned(authUser);
 
   return (
-    <div className="p-2.5 border-b border-base-300 bg-base-100">
+    <div className="shrink-0 p-2.5 border-b border-base-300 bg-base-100">
       <div className="flex items-center justify-between">
         {/* LEFT SIDE */}
         <div className="flex items-center gap-3">
@@ -37,8 +37,7 @@ const ChatHeader = () => {
               {banned && (
                 <span
                   title="Your account is temporarily restricted"
-                  className="text-[10px] px-2 py-0.5 rounded-full bg-red-100 text-red-600 font-medium"
-                >
+                  className="text-[10px] px-2 py-0.5 rounded-full bg-red-100 text-red-600 font-medium">
                   Sending blocked
                 </span>
               )}
@@ -64,8 +63,7 @@ const ChatHeader = () => {
         {/* RIGHT SIDE */}
         <button
           className="cursor-pointer opacity-70 hover:opacity-100 transition"
-          onClick={() => setSelectedUser(null)}
-        >
+          onClick={() => setSelectedUser(null)}>
           <X className="size-5" />
         </button>
       </div>

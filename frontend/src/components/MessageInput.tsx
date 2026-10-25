@@ -252,8 +252,7 @@ const MessageInput = () => {
           <button
             type="button"
             onClick={() => setReplyingTo(null)}
-            className="ml-2 sm:ml-3 p-2 sm:p-1 rounded-full hover:bg-zinc-700 text-zinc-400 hover:text-white"
-          >
+            className="ml-2 sm:ml-3 p-2 sm:p-1 rounded-full hover:bg-zinc-700 text-zinc-400 hover:text-white">
             <X size={16} />
           </button>
         </div>
@@ -270,8 +269,7 @@ const MessageInput = () => {
             <button
               onClick={removeImage}
               type="button"
-              className="absolute -top-2 -right-2 bg-zinc-700 text-white w-6 h-6 rounded-full flex items-center justify-center shadow"
-            >
+              className="absolute -top-2 -right-2 bg-zinc-700 text-white w-6 h-6 rounded-full flex items-center justify-center shadow">
               <X size={14} />
             </button>
           </div>
@@ -283,15 +281,14 @@ const MessageInput = () => {
         {/* Left actions */}
         <div className="flex items-center gap-1">
           {/* Emoji */}
-          <button
+          {/* <button
             type="button"
             disabled={banned || isRecording}
             onClick={() => setShowEmoji((value) => !value)}
             aria-label="Choose emoji"
-            className="btn btn-ghost btn-circle btn-sm sm:btn-md disabled:opacity-50"
-          >
+            className="btn btn-ghost btn-circle btn-sm sm:btn-md disabled:opacity-50">
             😊
-          </button>
+          </button> */}
 
           {/* Image */}
           <input
@@ -312,8 +309,7 @@ const MessageInput = () => {
             }
             aria-label="Attach image"
             onClick={() => fileInputRef.current?.click()}
-            className="btn btn-ghost btn-circle btn-sm sm:btn-md disabled:opacity-50"
-          >
+            className="btn btn-ghost btn-circle btn-sm sm:btn-md disabled:opacity-50">
             <Image size={18} />
           </button>
         </div>
@@ -333,7 +329,7 @@ const MessageInput = () => {
             maxLength={5000}
             disabled={banned || isSendingAudio || isSending || isRecording}
             className={[
-              "w-full min-w-0 input input-bordered input-md rounded-xl",
+              "w-full min-w-0 input input-bordered input-md rounded-xl text-base sm:text-sm",
               banned ? "input-disabled cursor-not-allowed" : "",
             ].join(" ")}
             placeholder={
@@ -368,8 +364,7 @@ const MessageInput = () => {
                 ? "bg-red-500 text-white"
                 : "bg-base-200"
           }`}
-          onClick={isRecording ? stopRecording : startRecording}
-        >
+          onClick={isRecording ? stopRecording : startRecording}>
           {isSendingAudio ? (
             <Loader2 className="animate-spin" size={18} />
           ) : (
@@ -391,8 +386,7 @@ const MessageInput = () => {
           className={[
             "btn btn-circle btn-primary btn-sm sm:btn-md",
             banned ? "btn-disabled" : "",
-          ].join(" ")}
-        >
+          ].join(" ")}>
           {isSending ? (
             <Loader2 className="animate-spin" size={18} />
           ) : (
